@@ -21,22 +21,29 @@ module Mux16bit_8to1(E     ,   S  , X0,X1,X2,X3,X4,X5,X6,X7, Z);
     input [2:0] S;
     input [15:0] X0,X1,X2,X3,X4,X5,X6,X7;
     output [15:0] Z;
-    wire [15:0] Z1, Z2, Z3, Z4,Z5,Z6;
+    wire [15:0] Z0,Z1, Z2, Z3, Z4,Z5;
+    
+    //******************************************************************//BEGIN two 4-to-1 Mux's
+    //                               Enable,Select   ,Input1,Input0,Output
+    Mux16bit_2to1       MUX4        (E     ,   S[0]  , X1   , X0   , Z0); 
+    //                               Enable,Select   ,Input1,Input0,Output
+    Mux16bit_2to1       MUX3        (E     ,   S[0]  , X3   , X2   , Z1);
+    //                               Enable,Select   ,Input1,Input0,Output
+    Mux16bit_2to1       MUX2        (E     ,   S[0]  , X5   , X4   , Z2);     
+    //                               Enable,Select   ,Input1,Input0,Output
+    Mux16bit_2to1       MUX1        (E     ,   S[0]  , X7   , X6   , Z3);
+    //******************************************************************//END two 4-to-1 Mux's
     
     
-    //                               Enable,Select,Input1,Input2,Output
-    Mux16bit_2to1       MUX1        (E     ,   S[0]  , X7   , X6   , Z1);
-    //                               Enable,Select,Input1,Input2,Output
-    Mux16bit_2to1       MUX2        (E     ,   S[0]  , X5   , X4   , Z2);    
-    //                               Enable,Select,Input1,Input2,Output
-    Mux16bit_2to1       MUX3        (E     ,   S[0]  , X3   , X2   , Z3);    
-    //                               Enable,Select,Input1,Input2,Output
-    Mux16bit_2to1       MUX4        (E     ,   S[0]  , X1   , X0   , Z4);
-    //                               Enable,Select,Input1,Input2,Output
-    Mux16bit_2to1       MUX5        (E     ,   S[1]  , Z1   , Z2   , Z5);
-    //                               Enable,Select,Input1,Input2,Output
-    Mux16bit_2to1       MUX6        (E     ,   S[1]  , Z3   , Z4   , Z6);
-    //                               Enable,Select,Input1,Input2,Output
-    Mux16bit_2to1       MUX7        (E     ,   S[2]  , Z5   , Z6   , Z);        
+    //******************************************************************//BEGIN two 2-to-1 Mux's
+    //                               Enable,Select   ,Input1,Input0,Output
+    Mux16bit_2to1       MUX6        (E     ,   S[1]  , Z1   , Z0   , Z4);
+    //                               Enable,Select   ,Input1,Input0,Output
+    Mux16bit_2to1       MUX5        (E     ,   S[1]  , Z3   , Z2   , Z5);
+    //******************************************************************//END two 2-to-1 Mux's
+    
+    
+    //                               Enable,Select   ,Input1,Input0,Output
+    Mux16bit_2to1       MUX7        (E     ,   S[2]  , Z5   , Z4   , Z);        
 endmodule
 
